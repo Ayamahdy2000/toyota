@@ -6,7 +6,8 @@
       class="slider"
       :min="min"
       :max="max"
-      @input="getRangeValue"
+      @mouseup="getRangeValue"
+      @input="updateRangeColor"
       v-model="state.range"
     />
 
@@ -27,7 +28,6 @@ export default {
     });
 
     const getRangeValue = () => {
-      updateRangeColor()
       context.emit("getRangeValue", {
         index: props.index,
         value: state.range,
@@ -39,19 +39,20 @@ export default {
       const value = (state.range / slider.max) * 100;
 
       slider.style.background = `linear-gradient(to right, #C00F23 ${value}%, #FF141433 ${value}%)`;
-     
     };
     watch(
       () => props.modelValue,
       () => {
         state.range = props.modelValue ? props.modelValue.value : 0;
-        updateRangeColor()
-        
+        updateRangeColor();
       }
     );
-    return {
+
+     
+   return {
       getRangeValue,
       state,
+      updateRangeColor
     };
   },
 };

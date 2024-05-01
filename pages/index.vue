@@ -1,6 +1,6 @@
 <template>
   <generic-loader v-if="state.isLoading" />
-  <div class="container" v-else>
+  <div class="container" >
     <header class="mt-10 md:mt-20 xl:mt-40">
       <!-- filter -->
       <div class="filter flex flex-wrap md:-me-4 mb-9">
@@ -71,7 +71,7 @@
       <generic-empty-state
         img="empty"
         text="No Product"
-        v-if="state.products.length <= 0"
+        v-if="state.products.length <= 0 && !state.isLoading"
       />
       <!-- Product cards -->
       <div class="flex flex-wrap justify-center md:-me-7 -mb-7" v-else>
