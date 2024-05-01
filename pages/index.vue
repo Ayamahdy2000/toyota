@@ -1,6 +1,8 @@
 <template>
-  <div class="container">
-    <main class="mt-10 md:mt-20 xl:mt-40">
+  <generic-loader v-if="state.isLoading" />
+  <div class="container" v-else>
+    <header class="mt-10 md:mt-20 xl:mt-40">
+      <!-- filter -->
       <div class="filter flex flex-wrap md:-me-4 mb-9">
         <div
           class="xl:w-1/4 md:w-1/3 w-full md:pe-4 mb-4 md:mb-0"
@@ -29,7 +31,8 @@
           />
         </div>
       </div>
-
+    </header>
+    <main>
       <div class="flex flex-wrap md:-me-2 justify-end mb-4">
         <div v-for="(item, index) in state.selectedType" :key="index">
           <div
@@ -47,11 +50,7 @@
             </p>
           </div>
         </div>
-        <div
-      
-          v-for="(item, index) in state.rangeValues"
-          :key="index"
-        >
+        <div v-for="(item, index) in state.rangeValues" :key="index">
           <div
             v-if="item"
             class="border border-primary-500 rounded-md px-5 py-4 mb-4 me-4"
@@ -68,7 +67,14 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-wrap justify-center md:-me-7 -mb-7">
+      <!-- empty state -->
+      <generic-empty-state
+        img="empty"
+        text="No Product"
+        v-if="state.products.length <= 0"
+      />
+      <!-- Product cards -->
+      <div class="flex flex-wrap justify-center md:-me-7 -mb-7" v-else>
         <div
           class="xl:w-1/4 md:w-1/3 w-full pb-7 md:pe-7"
           v-for="(item, index) in state.products"
@@ -87,17 +93,28 @@ import { reactive, onMounted } from "vue";
 import Selected from "~/components/filters/selected.vue";
 import Range from "~/components/filters/range.vue";
 import { XMarkIcon } from "@heroicons/vue/24/outline";
+import GenericLoader from "~/components/GenericLoader.vue";
+import GenericEmptyState from "~/components/GenericEmptyState.vue";
 export default {
-  components: { Card, Selected, Range, XMarkIcon },
+  components: {
+    Card,
+    Selected,
+    Range,
+    XMarkIcon,
+    GenericLoader,
+    GenericEmptyState,
+  },
   setup() {
     const state = reactive({
       products: [],
       filter: {},
       selectedType: [],
       rangeValues: [],
+      isLoading: false,
     });
 
     const getProducts = async () => {
+      state.isLoading = true;
       const params = {};
       state.selectedType.forEach((el, index) => {
         params[`filter[selectTypes][${index}][id]`] = el.id;
@@ -109,15 +126,26 @@ export default {
         params[`filter[numericTypes][${index}][from]`] = 0;
         params[`filter[numericTypes][${index}][to]`] = el.value;
       });
-      await getAllProducts(params).then((res) => {
-        state.products = res.data.data;
-      });
+      await getAllProducts(params)
+        .then((res) => {
+          state.products = res.data.data;
+          state.isLoading = false;
+        })
+        .catch(() => {
+          state.isLoading = false;
+        });
     };
     const getProductsFilter = async () => {
-      await getFilters().then((res) => {
-        state.filter = res.data.data;
-        state.filter["Select-Type"].splice(1, 1);
-      });
+      state.isLoading = true;
+      await getFilters()
+        .then((res) => {
+          state.filter = res.data.data;
+          state.filter["Select-Type"].splice(1, 1);
+          state.isLoading = false;
+        })
+        .catch(() => {
+          state.isLoading = false;
+        });
     };
     const getSelectedValue = (val) => {
       state.selectedType[val.index] = {

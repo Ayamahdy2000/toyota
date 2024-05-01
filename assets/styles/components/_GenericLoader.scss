@@ -1,0 +1,41 @@
+.generic-loader {
+    width: 101%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($color: #000000, $alpha: .02);
+
+    .spinner {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: radial-gradient(farthest-side, var(--primary) 94%, #0000) top/9px 9px no-repeat,
+            conic-gradient(#0000 30%, var(--primary));
+        -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 9px), #000 0);
+        animation: spinner-c7wet2 1s infinite linear;
+    }
+
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(farthest-side, #ffffff 94%, #0000) top/9px 9px no-repeat,
+        conic-gradient(#0000 30%, #ffffff);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 9px), #000 0);
+    animation: spinner-c7wet2 1s infinite linear;
+}
+
+@keyframes spinner-c7wet2 {
+    100% {
+        transform: rotate(1turn);
+    }
+}

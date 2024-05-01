@@ -6,7 +6,7 @@
           <div class="flex flex-shrink-0 items-center">
             <img
               class="h-8 md:h-12 w-auto"
-              src="../../assets/images/logo.svg"
+              src="/images/logo.svg"
               alt="logo"
             />
           </div>
