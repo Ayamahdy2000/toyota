@@ -7,8 +7,8 @@ export default {
   theme: {
     container: {
       center: true,
-     
-   
+
+
       padding: {
         'DEFAULT': '1rem',
         'sm': '30px',
@@ -31,12 +31,13 @@ export default {
         interMedium: ["Inter-Medium"],
       },
       borderRadius: {
-        md:'5px'
+        md: '5px'
       },
       fontSize: {
         sm: ['14px', '17px'],
         lg: ["18px", '22px'],
-        md: ["16px", '20px']
+        md: ["16px", '20px'],
+        xl: ["32px", '39px']
       }
     },
   },

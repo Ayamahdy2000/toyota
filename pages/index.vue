@@ -1,89 +1,91 @@
 <template>
   <generic-loader v-if="state.isLoading" />
-  <div class="container" >
-    <header class="mt-10 md:mt-20 xl:mt-40">
-      <!-- filter -->
-      <div class="filter flex flex-wrap md:-me-4 mb-9">
-        <div
-          class="xl:w-1/4 md:w-1/3 w-full md:pe-4 mb-4 md:mb-0"
-          v-for="(item, index) in state.filter['Select-Type']"
-          :key="index"
-        >
-          <selected
-            :item="item"
-            :index="index"
-            v-model="state.selectedType[index]"
-            @getSelectedValue="getSelectedValue"
-          />
-        </div>
-        <div
-          class="xl:w-1/4 md:w-1/3 w-full md:pe-4 mb-4 md:mb-0"
-          v-for="(item, index) in state.filter['Numeric-Type']"
-          :key="index"
-        >
-          <range
-            :item="item"
-            min="0"
-            max="12000"
-            :index="index"
-            v-model="state.rangeValues[index]"
-            @getRangeValue="getRangeValue"
-          />
-        </div>
+  <div class="container mt-10 md:mt-20 xl:mt-40">
+    <h2
+      class="generic-title uppercase text-xl font-interBold  md-4 md:mb-7 w-max mx-auto"
+    >
+      Ranges
+      <div class="bg-primary-500 h-px w-12 mx-auto mt-2.5"></div>
+    </h2>
+    <!-- filter -->
+    <div class="filter flex flex-wrap md:-me-4 mb-9">
+      <div
+        class="xl:w-1/4 md:w-1/3 w-full md:pe-4 mb-4 md:mb-0"
+        v-for="(item, index) in state.filter['Select-Type']"
+        :key="index"
+      >
+        <selected
+          :item="item"
+          :index="index"
+          v-model="state.selectedType[index]"
+          @getSelectedValue="getSelectedValue"
+        />
       </div>
-    </header>
-    <main>
-      <div class="flex flex-wrap md:-me-2 justify-end mb-4">
-        <div v-for="(item, index) in state.selectedType" :key="index">
-          <div
-            v-if="item"
-            class="border border-primary-500 rounded-md px-5 py-4 mb-4 me-4"
-          >
-            <p class="items-center text-primary-500 text-sm font-inter flex">
-              {{ item.itemName }} :{{ item?.name }}
+      <div
+        class="xl:w-1/4 md:w-1/3 w-full md:pe-4 mb-4 md:mb-0"
+        v-for="(item, index) in state.filter['Numeric-Type']"
+        :key="index"
+      >
+        <range
+          :item="item"
+          min="0"
+          max="12000"
+          :index="index"
+          v-model="state.rangeValues[index]"
+          @getRangeValue="getRangeValue"
+        />
+      </div>
+    </div>
+    <div class="flex flex-wrap md:-me-2 justify-end mb-4">
+      <div v-for="(item, index) in state.selectedType" :key="index">
+        <div
+          v-if="item"
+          class="border border-primary-500 rounded-md px-5 py-4 mb-4 me-4"
+        >
+          <p class="items-center text-primary-500 text-sm font-inter flex">
+            {{ item.itemName }} :{{ item?.name }}
 
-              <span class="ms-5"
-                ><XMarkIcon
-                  class="w-2.5 h-2.5 stroke-2 cursor-pointer mt-0.5"
-                  @click="clearSelectedType(index)"
-              /></span>
-            </p>
-          </div>
-        </div>
-        <div v-for="(item, index) in state.rangeValues" :key="index">
-          <div
-            v-if="item"
-            class="border border-primary-500 rounded-md px-5 py-4 mb-4 me-4"
-          >
-            <p class="items-center text-primary-500 text-sm font-inter flex">
-              {{ item.itemName }} :{{ item?.value }}
-
-              <span class="ms-5"
-                ><XMarkIcon
-                  class="w-2.5 h-2.5 stroke-2 cursor-pointer mt-0.5"
-                  @click="clearRangeValue(index)"
-              /></span>
-            </p>
-          </div>
+            <span class="ms-5"
+              ><XMarkIcon
+                class="w-2.5 h-2.5 stroke-2 cursor-pointer mt-0.5"
+                @click="clearSelectedType(index)"
+            /></span>
+          </p>
         </div>
       </div>
-      <!-- empty state -->
-      <generic-empty-state
-        img="empty"
-        text="No Product"
-        v-if="state.products.length <= 0 && !state.isLoading"
-      />
-      <!-- Product cards -->
-      <div class="flex flex-wrap justify-center md:-me-7 -mb-7" v-else>
+      <div v-for="(item, index) in state.rangeValues" :key="index">
         <div
-          class="xl:w-1/4 md:w-1/3 w-full pb-7 md:pe-7"
-          v-for="(item, index) in state.products"
-          :key="index"
+          v-if="item"
+          class="border border-primary-500 rounded-md px-5 py-4 mb-4 me-4"
         >
-          <card :item="item" />
+          <p class="items-center text-primary-500 text-sm font-inter flex">
+            {{ item.itemName }} :{{ item?.value }}
+
+            <span class="ms-5"
+              ><XMarkIcon
+                class="w-2.5 h-2.5 stroke-2 cursor-pointer mt-0.5"
+                @click="clearRangeValue(index)"
+            /></span>
+          </p>
         </div>
       </div>
-    </main>
+    </div>
+    <!-- empty state -->
+    <generic-empty-state
+      img="empty"
+      text="No Product"
+      v-if="state.products.length <= 0 && !state.isLoading"
+    />
+    <!-- Product cards -->
+    <div class="flex flex-wrap justify-center md:-me-7 -mb-7" v-else>
+      <div
+        class="xl:w-1/4 md:w-1/3 w-full pb-7 md:pe-7"
+        v-for="(item, index) in state.products"
+        :key="index"
+      >
+        <card :item="item" />
+      </div>
+    </div>
   </div>
 </template>
 <script>
