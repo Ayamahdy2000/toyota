@@ -7,8 +7,8 @@
         class="selected-card__item"
         v-for="(item, index) in item.values"
         :key="index"
-        @click="getSelectedValue(item.fields.value,item.fields.name)"
-        :class="state.value == item.fields.value ? 'active' : ''"
+        @click="getSelectedValue(item.fields.id,item.fields.name)"
+        :class="state.value == item.fields.id ? 'active' : ''"
       >
         <div class="circle"></div>
 

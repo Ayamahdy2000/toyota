@@ -40,7 +40,7 @@
       <div v-for="(item, index) in state.selectedType" :key="index" >
         <div
           v-if="item"
-          class="border border-primary-500 rounded-md px-5 py-4 mb-4 ms-e"
+          class="border border-primary-500 rounded-md px-5 py-4 mb-4 ms-4"
         >
           <p class="items-center text-primary-500 text-sm font-inter flex">
             {{ item.itemName }} :{{ item?.name }}
