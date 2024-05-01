@@ -2,7 +2,7 @@
   <generic-loader v-if="state.isLoading" />
   <div class="container mt-10 md:mt-20 xl:mt-40">
     <h2
-      class="generic-title uppercase text-xl font-interBold  md-4 md:mb-7 w-max mx-auto"
+      class="generic-title uppercase text-xl font-interBold md-4 md:mb-7 w-max mx-auto"
     >
       Ranges
       <div class="bg-primary-500 h-px w-12 mx-auto mt-2.5"></div>
@@ -128,26 +128,24 @@ export default {
         params[`filter[numericTypes][${index}][from]`] = 0;
         params[`filter[numericTypes][${index}][to]`] = el.value;
       });
-      await getAllProducts(params)
-        .then((res) => {
-          state.products = res.data.data;
-          state.isLoading = false;
-        })
-        .catch(() => {
-          state.isLoading = false;
-        });
+      try {
+        const res = await getAllProducts(params);
+        state.products = res.data.data;
+      } catch (error) {
+      } finally {
+        state.isLoading = false;
+      }
     };
     const getProductsFilter = async () => {
       state.isLoading = true;
-      await getFilters()
-        .then((res) => {
-          state.filter = res.data.data;
-          state.filter["Select-Type"].splice(1, 1);
-          state.isLoading = false;
-        })
-        .catch(() => {
-          state.isLoading = false;
-        });
+      try {
+        const res = await getFilters();
+        state.filter = res.data.data;
+        state.filter["Select-Type"].splice(1, 1);
+      } catch (error) {
+      } finally {
+        state.isLoading = false;
+      }
     };
     const getSelectedValue = (val) => {
       state.selectedType[val.index] = {
