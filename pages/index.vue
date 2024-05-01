@@ -36,11 +36,11 @@
         />
       </div>
     </div>
-    <div class="flex flex-wrap md:-me-2 justify-end mb-4">
-      <div v-for="(item, index) in state.selectedType" :key="index">
+    <div class="flex flex-wrap  justify-end mb-4 w-9/12">
+      <div v-for="(item, index) in state.selectedType" :key="index" >
         <div
           v-if="item"
-          class="border border-primary-500 rounded-md px-5 py-4 mb-4 me-4"
+          class="border border-primary-500 rounded-md px-5 py-4 mb-4 ms-e"
         >
           <p class="items-center text-primary-500 text-sm font-inter flex">
             {{ item.itemName }} :{{ item?.name }}
@@ -56,7 +56,7 @@
       <div v-for="(item, index) in state.rangeValues" :key="index">
         <div
           v-if="item"
-          class="border border-primary-500 rounded-md px-5 py-4 mb-4 me-4"
+          class="border border-primary-500 rounded-md px-5 py-4 mb-4 ms-4"
         >
           <p class="items-center text-primary-500 text-sm font-inter flex">
             {{ item.itemName }} :{{ item?.value }}
